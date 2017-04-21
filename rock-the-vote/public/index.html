@@ -28,23 +28,25 @@
 
     <!------------------Display Post-------------------------------->
     <div class="container">
-        <div ng-repeat="item in issues">
+        <div ng-repeat="item in issues | orderBy: '-votes' track by $index">
             {{item.title}}<br/> {{item.description}}
-            <p ng-model="issue.totalVote">{{totalVote}}</p>
+            <p>{{item.votes}}</p>
+            <p ng-repeat="comment in item.comments">{{comment}}</p>
             <div class="up-down-vote">
-                <button type="button" class="btn btn-success">
+                <button ng-click="upVote(item)" type="button" class="btn btn-success">
                     <label>Upvote</label>
                     <i class="fa fa-thumbs-up" aria-hidden="true"></i>
                 </button>
-                <button ng-click="decreaseVote()" type="button" class="btn btn-danger">
-                    <label>downvote</label>
+                <button ng-click="downVote(item)" type="button" class="btn btn-danger">
+                    <label>Downvote</label>
                     <i class="fa fa-thumbs-down" aria-hidden="true"></i>
                 </button>
             </div>
             <div class="textbox">
-                <textarea placeholder="Drop you comment here" ng-model="issue.comment"></textarea>
-                <button type="button" ng-click="addComment()">Add</button>
+                <textarea placeholder="Drop you comment here" ng-model="newComment"></textarea>
+                <button type="button" ng-click="addComment(newComment, item)">Add</button>
             </div>
+            <button type="button" ng-click="deleteIssue($index, item._id)">Remove</button>
         </div>
 
 

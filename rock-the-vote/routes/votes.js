@@ -1,7 +1,7 @@
 var express = require("express");
 var voteRouter = express.Router();
 var bodyParser = require("body-parser");
-voteRouter.use(bodyParser.json())
+voteRouter.use(bodyParser.json());
 var Vote = require("../model/vote-schema")
 
 voteRouter.get('/', function (req, res) {
@@ -11,7 +11,7 @@ voteRouter.get('/', function (req, res) {
 })
 
 voteRouter.post("/", function (req, res) {
-    newVote = new Vote(req.body);
+    var newVote = new Vote(req.body);
     newVote.save(function (err, savedVote) {
         res.send(savedVote);
     })
@@ -19,22 +19,24 @@ voteRouter.post("/", function (req, res) {
 
 
 voteRouter.delete("/:id", function (req, res) {
-            Vote.findByIdAndRemove(req.params.id, function (err, voteToBeDeleted) {
-                    voteToBeDeleted.remove(function (err) {
-                        res.send("Your item has been deleted Successfully");
-                    })
-                })
+    Vote.findByIdAndRemove(req.params.id, function (err, voteToBeDeleted) {
+        voteToBeDeleted.remove(function (err) {
+            res.send("Your item has been deleted Successfully");
+        })
+    })
 
-            })
-
-
+})
 
 
-voteRouter.put("/:id", function(req, res){
-    Vote.findByIdAndUpdate(req.params.id, req.body, {new: true}, function(err, editedVote){
+
+
+voteRouter.put("/:id", function (req, res) {
+    Vote.findByIdAndUpdate(req.params.id, req.body, {
+        new: true
+    }, function (err, editedVote) {
         res.send(editedVote);
     })
 })
 
 
-        module.exports = voteRouter;
+module.exports = voteRouter;

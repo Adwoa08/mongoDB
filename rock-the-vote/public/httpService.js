@@ -7,9 +7,9 @@ app.service("httpService",["$http", function($http){
         
         return $http.get("/votes").then(function(response){
             return self.OldPost = response.data;
-        })
-        
+        })  
     }
+    
     
     
    this.posting = function(issue){
@@ -19,6 +19,30 @@ app.service("httpService",["$http", function($http){
        }) 
    } 
     
+   
+   this.editIssues = function(issue){
+       
+       return $http.put("/votes/" + issue._id, issue).then(function(response){
+           return response.data;
+       })
+       
+   }
+   
+      this.editComment = function(issue){
+          
+       return $http.put("/votes/" + issue._id, issue).then(function(response){
+           return response.data;
+       })
+       
+   }
     
-    
+  
+      
+      this.deleteOldIssue = function(id){
+          return $http.delete("/votes/" + id).then(function(response){
+             alert("Your item has been successfully deleted");
+          })
+      }
+      
+      
 }])
